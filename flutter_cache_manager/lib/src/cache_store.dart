@@ -182,7 +182,10 @@ class CacheStore {
     }
     final file = await fileSystem.createFile(cacheObject.relativePath);
     if (await file.exists()) {
-      await file.delete();
+      // avoid crash log https://github.com/Baseflow/flutter_cache_manager/issues/184 
+      try {
+        await file.delete();
+      } catch (e) {}
     }
   }
 
